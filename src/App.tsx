@@ -294,6 +294,7 @@ export default function App() {
       <Header
         isDark={isDark}
         onToggleTheme={() => setIsDark(!isDark)}
+        onSetTheme={(dark: boolean) => setIsDark(dark)}
         exchangeRates={exchangeRates}
         onOpenRates={() => setIsRatesModalOpen(true)}
         onOpenShortcuts={() => setIsShortcutsModalOpen(true)}

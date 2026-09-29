@@ -5,6 +5,7 @@ import { ExchangeRates } from '../types';
 interface HeaderProps {
   isDark: boolean;
   onToggleTheme: () => void;
+  onSetTheme?: (isDark: boolean) => void;
   exchangeRates: ExchangeRates;
   onOpenRates: () => void;
   onOpenShortcuts: () => void;
@@ -13,10 +14,18 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   isDark,
   onToggleTheme,
+  onSetTheme,
   exchangeRates,
   onOpenRates,
   onOpenShortcuts,
 }) => {
+  const setDark = (dark: boolean) => {
+    if (onSetTheme) {
+      onSetTheme(dark);
+    } else {
+      if (isDark !== dark) onToggleTheme();
+    }
+  };
   return (
     <header className="w-full border-b border-neutral-200/60 dark:border-neutral-800/80 apple-glass sticky top-0 z-30 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
@@ -72,15 +81,39 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="hidden sm:inline">단축키</span>
           </button>
 
-          {/* Theme Toggle */}
-          <button
-            onClick={onToggleTheme}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
-            aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
-            title={isDark ? '라이트 모드' : '다크 모드'}
+          {/* Black & White Segmented Switch */}
+          <div
+            className="flex items-center p-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200/80 dark:border-neutral-700/80 text-xs"
+            role="group"
+            aria-label="블랙 앤 화이트 테마 선택"
           >
-            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-neutral-600" />}
-          </button>
+            <button
+              type="button"
+              onClick={() => setDark(false)}
+              className={`flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                !isDark
+                  ? 'bg-white text-neutral-900 shadow-xs font-semibold'
+                  : 'text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200'
+              }`}
+              title="화이트 모드"
+            >
+              <Sun className={`w-3.5 h-3.5 ${!isDark ? 'text-amber-500' : 'text-neutral-400'}`} />
+              <span className="text-[11px]">화이트</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setDark(true)}
+              className={`flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                isDark
+                  ? 'bg-neutral-900 text-white shadow-xs font-semibold'
+                  : 'text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200'
+              }`}
+              title="블랙 모드"
+            >
+              <Moon className={`w-3.5 h-3.5 ${isDark ? 'text-amber-300' : 'text-neutral-400'}`} />
+              <span className="text-[11px]">블랙</span>
+            </button>
+          </div>
         </div>
       </div>
     </header>

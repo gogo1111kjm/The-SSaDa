@@ -75,9 +75,17 @@
         <button id="popup-btn" class="px-3 py-1.5 rounded-full text-xs font-medium text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition-colors">
           팝업 허용법
         </button>
-        <button id="theme-btn" class="w-8 h-8 rounded-full flex items-center justify-center text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
-          <span id="theme-icon">🌙</span>
-        </button>
+        <!-- Black & White Segmented Switch -->
+        <div class="flex items-center p-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs">
+          <button id="theme-white-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition-all">
+            <span class="text-amber-500">☀️</span>
+            <span>화이트</span>
+          </button>
+          <button id="theme-black-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition-all">
+            <span>🌙</span>
+            <span>블랙</span>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -330,22 +338,28 @@
     const btnCountEl = document.getElementById('btn-count');
     const toggleAllBtn = document.getElementById('toggle-all-btn');
     const mainSearchBtn = document.getElementById('main-search-btn');
-    const themeBtn = document.getElementById('theme-btn');
-    const themeIcon = document.getElementById('theme-icon');
+    const themeWhiteBtn = document.getElementById('theme-white-btn');
+    const themeBlackBtn = document.getElementById('theme-black-btn');
     const priceReport = document.getElementById('price-report');
 
     // Init Theme
     function updateTheme() {
       if (state.isDark) {
         document.documentElement.classList.add('dark');
-        themeIcon.textContent = '☀️';
+        themeBlackBtn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-neutral-900 text-white shadow-xs transition-all';
+        themeWhiteBtn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium text-neutral-400 hover:text-neutral-200 transition-all';
       } else {
         document.documentElement.classList.remove('dark');
-        themeIcon.textContent = '🌙';
+        themeWhiteBtn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-neutral-900 shadow-xs transition-all';
+        themeBlackBtn.className = 'flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium text-neutral-500 hover:text-neutral-700 transition-all';
       }
     }
-    themeBtn.addEventListener('click', () => {
-      state.isDark = !state.isDark;
+    themeWhiteBtn.addEventListener('click', () => {
+      state.isDark = false;
+      updateTheme();
+    });
+    themeBlackBtn.addEventListener('click', () => {
+      state.isDark = true;
       updateTheme();
     });
     updateTheme();
