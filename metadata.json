@@ -1,0 +1,6 @@
+{
+  "name": "The SSaDa",
+  "description": "구글의 심플함과 애플의 정제된 감성을 담은 글로벌 최저가 동시 검색 엔진. 아마존, 아마존 재팬, 네이버를 한 번에 검색하세요.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
